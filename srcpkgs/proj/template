@@ -1,0 +1,30 @@
+# Template file for 'proj'
+# Modified by Monkey-7-12 <monkeyseven@fblog.ch>
+pkgname=proj
+version=7.2.0
+revision=1
+build_style=cmake
+configure_args="-DPROJ_TESTS=OFF"
+hostmakedepends="python3"
+makedepends="sqlite-devel tiff-devel libcurl-devel"
+short_desc="Cartographic Projections Library"
+#maintainer="John <me@johnnynator.dev>"
+maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
+license="MIT"
+homepage="https://proj4.org"
+distfiles="https://download.osgeo.org/proj/proj-${version}.tar.gz"
+checksum=2957798e5fe295ff96a2af1889d0428e486363d210889422f76dd744f7885763
+
+post_install() {
+	vlicense COPYING
+}
+
+proj-devel_package() {
+	depends="${sourcepkg}-${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/include
+		vmove usr/lib/cmake
+		vmove "usr/lib/*.so"
+	}
+}
