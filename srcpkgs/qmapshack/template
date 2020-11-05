@@ -1,0 +1,26 @@
+# Template file for 'qmapshack'
+pkgname=qmapshack
+version=1.15.0
+revision=2
+wrksrc=qmapshack-V_${version}
+build_style=cmake
+configure_args="-DROUTINO_XML_PATH=/usr/share/routino"
+makedepends="qt5-devel qt5-widgets qt5-tools-devel
+ qt5-plugin-mysql qt5-plugin-odbc qt5-plugin-pgsql qt5-plugin-sqlite
+ qt5-plugin-tds qt5-webengine-devel qt5-declarative-devel 
+ qt5-webchannel-devel qt5-location-devel
+ libgdal-devel proj-devel
+ libjpeg-turbo-devel routino-devel
+ quazip-devel"
+short_desc="GPS mapping utility"
+maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/Maproom/qmapshack/wiki"
+distfiles="https://github.com/Maproom/qmapshack/archive/V_${version}.tar.gz"
+checksum=a3a470657a66a21a59e812dd6f9351845ce3300c00c25622dcb4a3818ed884f2
+patch_args="-Np1"
+
+post_extract() {
+	cat FindQuaZip5.patch |patch -o cmake/Modules/FindQuaZip5.cmake
+	cp "${FILESDIR}"/FindPROJ4.cmake cmake/Modules
+}
