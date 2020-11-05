@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=josm
+Comment=Java OpenStreetMap Editor
+Exec=josm %u
+Icon=josm
+GenericName=Java OpenStreetMap Editor
+Terminal=false
+Type=Application
+Categories=Utility;Science;Geoscience
