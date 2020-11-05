@@ -1,0 +1,15 @@
+# Template file for 'python3-osgeo'
+pkgname=python3-osgeo
+version=3.2.0
+revision=1
+wrksrc=GDAL-${version}
+build_style=python3-module
+hostmakedepends="python3-setuptools"
+makedepends="python3-numpy libgdal-devel>=${version} python3-devel"
+depends="libgdal>=${version} python3-numpy"
+short_desc="GDAL Python3 bindings"
+maintainer="Bo Son <boson@gmx.at>"
+license="GPL-3.0-or-later"
+homepage="https://pypi.org/project/GDAL/"
+distfiles="${PYPI_SITE}/G/GDAL/GDAL-${version}.tar.gz"
+checksum=2b758fbe60f7ec5c38400d72630df633765e46b5f3f54bcb3115eaea0d531a36
