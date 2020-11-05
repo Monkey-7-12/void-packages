@@ -1,0 +1,47 @@
+# Template file for 'routino'
+# TODO: python3 modules
+#       #python: swig python3-devel python3-setuptools?
+pkgname=routino
+version=3.3.2
+revision=1
+#archs="i686 x86_64"
+build_style=gnu-makefile
+hostmakedepends="python3 perl"
+makedepends="zlib-devel bzip2-devel liblzma-devel"
+short_desc="Router for OpenStreetMap Data"
+maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
+license="GPL-3.0-or-later"
+license="AGPL-3.0"
+homepage="https://www.routino.org"
+distfiles="https://www.routino.org/download/routino-${version}.tgz"
+checksum=4b7174d76955e058986d343635e0a184385f2756fa4ffc02eb5e2399921e9db1
+
+do_patch() {
+	sed -i \
+		-e 's|/usr/local|/usr|' \
+		-e 's|docdir=.*|docdir=$(prefix)/share/doc/routino|' \
+		Makefile.conf
+}
+
+do_build() {
+	make
+	#pushd python
+	#make PYTHON=python3
+	#popd > /dev/null
+}
+
+#post_install() {
+#	pushd python
+#	make install DESTDIR=${DESTDIR}
+#	popd > /dev/null
+#}
+
+routino-devel_package() {
+        depends="${sourcepkg}>=${version}_${revision}"
+        short_desc+=" - development files"
+        pkg_install() {
+                vmove usr/include
+                #vmove usr/lib/*.a
+                vmove usr/lib/*.so
+        }
+}
