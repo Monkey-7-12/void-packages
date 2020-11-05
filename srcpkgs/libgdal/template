@@ -1,0 +1,54 @@
+# Template file for 'libgdal'
+# Modified by Monkey-7-12 <monkeyseven@fblog.ch>
+# + libgdal with additional postgresql support
+pkgname=libgdal
+version=3.2.0
+revision=1
+wrksrc="gdal-${version}/gdal"
+build_style=gnu-configure
+configure_args="--with-liblzma --with-webp --with-zstd --with-podofo $(vopt_with postgresql pg)"
+hostmakedepends="gettext-devel pkg-config python-numpy json-c-devel"
+makedepends="freexl-devel geos-devel jasper-devel json-c-devel
+ libcurl-devel libopenexr-devel libopenjpeg2-devel libpodofo-devel libqhull-devel
+ libwebp-devel libxml2-devel libzstd-devel netcdf-devel opencl-headers pcre2-devel
+ proj-devel sqlite-devel $(vopt_if postgresql postgresql-libs-devel)"
+short_desc="Geospatial Data Abstraction Library"
+#maintainer="Jürgen Buchmüller <pullmoll@t-online.de>"
+maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
+license="MIT"
+homepage="http://www.gdal.org/"
+distfiles="https://github.com/OSGeo/gdal/archive/v${version}.tar.gz"
+checksum=132497c170936a3d5e387797640c371db631d30ba7beabd0b6dacaa3642fb43c
+subpackages="libgdal-devel libgdal-tools"
+
+build_options="postgresql"
+build_options_default="postgresql"
+
+if [ -z "$CROSS_BUILD" ]; then
+	makedepends+=" hdf5-devel"
+fi
+
+post_install() {
+	vinstall gdal.pc 644 usr/lib/pkgconfig
+	vlicense LICENSE.TXT
+}
+
+libgdal-tools_package() {
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - tools"
+	pkg_install() {
+		vmove usr/bin
+	}
+}
+
+libgdal-devel_package() {
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/bin/gdal-config
+		vmove usr/include
+		vmove usr/lib/pkgconfig
+		vmove usr/lib/*.a
+		vmove usr/lib/*.so
+	}
+}
