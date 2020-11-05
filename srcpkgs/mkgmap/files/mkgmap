@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Wrapper script for mkgmap
+#
+
+MAX_MEM=1024m
+
+java -Xmx${MAX_MEM} -jar /usr/share/mkgmap/mkgmap.jar "$@"
