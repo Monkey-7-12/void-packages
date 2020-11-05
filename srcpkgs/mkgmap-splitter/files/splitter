@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Wrapper script for splitter
+#
+
+MAX_MEM=1024m
+
+java -Xmx${MAX_MEM} -jar /usr/share/mkgmap-splitter/splitter.jar "$@"
