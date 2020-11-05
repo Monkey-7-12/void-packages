@@ -4002,3 +4002,10 @@ libgrass_gproj.7.8.so grass-7.8.4_1
 libgrass_imagery.7.8.so grass-7.8.4_1
 libgrass_raster.7.8.so grass-7.8.4_1
 libgrass_vector.7.8.so grass-7.8.4_1
+libqgis_core.so.3.16.0 qgis-3.16.0_2
+libqgis_native.so.3.16.0 qgis-3.16.0_2
+libqgisgrass7.so.3.16.0 qgis-3.16.0_2
+libqgispython.so.3.16.0 qgis-3.16.0_2
+libqgis_gui.so.3.16.0 qgis-3.16.0_2
+libqgis_analysis.so.3.16.0 qgis-3.16.0_2
+libqgis_app.so.3.16.0 qgis-3.16.0_2
