@@ -1,0 +1,22 @@
+# Template file for 'mkgmap'
+pkgname=mkgmap
+version=4588
+revision=1
+wrksrc=mkgmap-r${version}
+depends="virtual?java-runtime"
+short_desc="Generate Garmin maps from OpenStreetMap data"
+maintainer="Nýx <n.y.x@bluewin.ch>"
+license="GPL-2.0-or-later"
+homepage="https://www.mkgmap.org.uk"
+distfiles="https://www.mkgmap.org.uk/download/mkgmap-r${version}.zip"
+checksum=c3228fbfd35d8b62130ef6876e23d37bc576c7c8272c8caa74b29b3a40aed282
+
+do_install() {
+	vbin ${FILESDIR}/mkgmap
+
+	vmkdir usr/share/${pkgname}
+	cp -R * ${DESTDIR}/usr/share/${pkgname}/
+
+	rm ${DESTDIR}/usr/share/${pkgname}/doc/mkgmap.1
+	vman doc/mkgmap.1
+}
