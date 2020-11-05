@@ -1,0 +1,28 @@
+# Template file for 'josm-latest'
+pkgname=josm-latest
+version=17293
+revision=1
+depends="virtual?java-runtime"
+short_desc="Java OpenStreetMap Editor"
+maintainer="Bo Son <boson@gmx.at>"
+license="GPL-3.0-or-later"
+homepage="https://josm.openstreetmap.de/"
+distfiles="https://josm.openstreetmap.de/download/josm-snapshot-${version}.jar"
+checksum=d0272dc6adebd529f2553e4c6c4bcb92f853589c9934a98131c8a21d263c39d0
+
+do_extract() {
+        :
+}
+
+do_install() {
+	vmkdir usr/lib/${pkgname}
+	cp ${XBPS_SRCDISTDIR}/${pkgname}-${version}/josm-snapshot-${version}.jar ${DESTDIR}/usr/lib/${pkgname}/
+	ln -s josm-snapshot-${version}.jar ${DESTDIR}/usr/lib/${pkgname}/josm-latest.jar
+	vbin ${FILESDIR}/josm-latest
+
+	vmkdir usr/share/applications
+	cp ${FILESDIR}/josm-latest.desktop ${DESTDIR}/usr/share/applications/
+
+	vmkdir usr/share/pixmaps
+	cp ${FILESDIR}/logo.svg ${DESTDIR}/usr/share/pixmaps/josm-latest.svg
+}

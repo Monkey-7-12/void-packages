@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Wrapper script for josm
+#
+
+if [[ ${JOSM_LATEST_HOME} ]]; then
+  opt="-Djosm.home=${JOSM_LATEST_HOME}"
+else
+  opt="-Djosm.dir.name=JOSM-latest"
+fi
+
+java -Xmx1536m $opt -jar /usr/lib/josm-latest/josm-latest.jar "$@"
