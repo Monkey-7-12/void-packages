@@ -1,0 +1,19 @@
+# Template file for 'mkgmap-splitter'
+pkgname=mkgmap-splitter
+version=597
+revision=1
+wrksrc=splitter-r${version}
+depends="virtual?java-runtime"
+short_desc="Tile splitter for mkgmap"
+maintainer="Nýx <n.y.x@bluewin.ch>"
+license="GPL-2.0-or-later"
+homepage="https://www.mkgmap.org.uk"
+distfiles="https://www.mkgmap.org.uk/download/splitter-r${version}.zip"
+checksum=b627cd4b4d50f6cf8708f5dac42d75ec857697cd58bab64826c4429ed92a7a32
+
+do_install() {
+	vbin ${FILESDIR}/splitter
+
+	vmkdir usr/share/${pkgname}
+	cp -R * ${DESTDIR}/usr/share/${pkgname}/
+}
