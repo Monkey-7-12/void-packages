@@ -1,0 +1,77 @@
+# Template file for 'brother-brscan4'
+# Modified by Monkey-7-12 <monkeyseven@fblog.ch>
+pkgname=brother-brscan4
+version=0.4.8
+revision=1
+archs="i686 x86_64"
+hostmakedepends="tar"
+depends="sane"
+short_desc="SANE scanner driver for brscan4-compatible printers"
+#maintainer="Martijn van Buul <martijn.van.buul@gmail.com>"
+maintainer="Bo Son <boson@gmx.at>"
+license="custom"
+homepage="http://support.brother.com/"
+repository="nonfree"
+nopie=yes
+_mylibrary="libsane-brother4.so.1.0.7"
+conf_files="/etc/opt/brother/scanner/brscan4/Brsane4.ini /etc/opt/brother/scanner/brscan4/brsanenetdevice4.cfg /etc/opt/brother/scanner/brscan4/models4/*.ini"
+
+# license
+distfiles="https://support.brother.com/g/s/agreement/English/agree.html>LICENSE.html"
+checksum=a28d9835d3b4eb76c7a0ecbfbe44a29fbe2074f77d9e5100a33c0d8eb8c97b91
+
+if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
+	_debpkgid="1.amd64"
+	distfiles+=" https://download.brother.com/welcome/dlf006645/brscan4-${version}-${_debpkgid}.deb"
+	checksum+=" 849699bb7748d8d5b86e4cfe75ec4c5d57d3de01f79aeb0720ef2a06a8ccd75f"
+	_deblibdir="usr/lib64"
+else
+	_debpkgid="1.i386"
+	distfiles+=" https://download.brother.com/welcome/dlf006646/brscan4-${version}-${_debpkgid}.deb"
+	checksum+=" 4fa5b3b801166d960d13e5ac4e88a9364adc763bc4791371b4d48c7a5f701996"
+	_deblibdir="usr/lib"
+fi
+
+do_extract() {
+	ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/brscan4-${version}-${_debpkgid}.deb
+	tar xzpf data.tar.gz
+}
+
+do_install() {
+	# binary package makes a fine mess of things, and installs stuff in very
+	# unwieldly locations. Some of this cannot be avoided.
+
+	# deb package installs 64-bit libraries in /usr/lib64; fix this
+	vinstall ./${_deblibdir}/sane/${_mylibrary} 755 usr/lib/sane
+	ln -sf /usr/lib/sane/${_mylibrary} ${DESTDIR}/usr/lib/sane/$(echo ${_mylibrary} | sed -e 's/\.[0-9]\.[0-9]$//')
+	ln -sf /usr/lib/sane/${_mylibrary} ${DESTDIR}/usr/lib/sane/$(echo ${_mylibrary} | sed -e 's/\.[0-9]\.[0-9]\.[0-9]$//')
+
+	# The binary library has hard-coded paths to
+	#
+	# /etc/opt/brother/scanner/brscan4
+	#
+	# This is very unfortunate, but cannot be avoided without the source to
+	# recompile the binary - which is not available.
+	#
+	# The deb package then goes ahead and installs symlinks to the actual
+	# files in /opt/brother/scanner/brscan4. Limit the mess by actually
+	# installing these files to /etc/opt/brother/scanner/brscan4 so there
+	# are no configuration files in /opt
+	#
+	cp -a opt ${DESTDIR}/
+
+	vmkdir etc/opt/brother/scanner/brscan4 755
+	vinstall opt/brother/scanner/brscan4/Brsane4.ini 644 etc/opt/brother/scanner/brscan4
+	vinstall opt/brother/scanner/brscan4/brsanenetdevice4.cfg 644 etc/opt/brother/scanner/brscan4
+	vcopy opt/brother/scanner/brscan4/models4 etc/opt/brother/scanner/brscan4
+
+	vmkdir usr/bin
+	local _bin
+	for _bin in brscan_gnetconfig brsaneconfig4 brscan_cnetconfig setupSaneScan4; do
+		ln -s /opt/brother/scanner/brscan4/$_bin ${DESTDIR}/usr/bin/
+	done
+
+	# Install the licenses.
+	vlicense "${XBPS_SRCDISTDIR}/${pkgname}-${version}/LICENSE.html"
+	vlicense opt/brother/scanner/brscan4/doc/brscan4/readme.txt # Independent JPEG blurb.
+}
