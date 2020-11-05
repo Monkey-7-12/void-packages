@@ -1,0 +1,38 @@
+# Template file for 'txt2tags'
+pkgname=txt2tags
+version=2.6
+revision=1
+archs="noarch"
+depends="python"
+short_desc="Python2 document generator"
+maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
+license="GPL-2.0-or-later"
+homepage="https://txt2tags.org/"
+distfiles="https://github.com/${pkgname}/${pkgname}/archive/${version}.tar.gz"
+checksum=c87b911ac5cc97dd2fdb6067601cf4fbd0094a065f6b7a593142fa75e3a924c1
+
+do_install() {
+	# bin
+	vbin txt2tags
+	vsed -i $DESTDIR/usr/bin/txt2tags -e '1c #!/usr/bin/env python2'
+	# man
+	vman doc/English/manpage.man txt2tags.1
+}
+
+# hooks/post-install/01-remove-localized-manpages.sh
+#
+#txt2tags-man_de_package() {
+#	depends="${sourcepkg}>=${version}_${revision}"
+#	short_desc+=" - German man page"
+#	pkg_install() {
+#		vman $wrksrc/doc/German/manpage-de.man txt2tags.de.1
+#	}
+#}
+#
+#txt2tags-man_fr_package() {
+#	depends="${sourcepkg}>=${version}_${revision}"
+#	short_desc+=" - French man page"
+#	pkg_install() {
+#		vman $wrksrc/doc/French/manpage-fr.man txt2tags.fr.1
+#	}
+#}
