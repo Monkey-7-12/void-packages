@@ -4014,3 +4014,5 @@ libqgispython.so.3.16.0 qgis-3.16.0_2
 libqgis_gui.so.3.16.0 qgis-3.16.0_2
 libqgis_analysis.so.3.16.0 qgis-3.16.0_2
 libqgis_app.so.3.16.0 qgis-3.16.0_2
+libroutino-slim.so.0 routino-3.3.2_1
+libroutino.so.0 routino-3.3.2_1
