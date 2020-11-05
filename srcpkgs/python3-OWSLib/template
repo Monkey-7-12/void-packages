@@ -1,0 +1,18 @@
+# Template file for 'python3-OWSLib'
+pkgname=python3-OWSLib
+version=0.20.0
+revision=2
+wrksrc=OWSLib-${version}
+build_style=python3-module
+#_p_ycompile_module="Pyro4"
+hostmakedepends="python3-devel python3-setuptools"
+short_desc="OWSLib Python3 modules"
+maintainer="Bo Son <boson@gmx.at>"
+license="BSD" # FIXME
+homepage="https://geopython.github.io/OWSLib"
+distfiles="https://github.com/geopython/OWSLib/archive/${version}.tar.gz"
+checksum=24dfed7372449a942d7d5090df3021f090c2bb52189b3f0044405d7b98c3bf66
+
+post_install() {
+	vlicense LICENSE
+}
