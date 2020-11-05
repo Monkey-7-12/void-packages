@@ -3993,3 +3993,5 @@ libSeExpr2Editor.so.3 seexpr-krita-3.4.4.0_1
 libSeExpr2.so.3 seexpr-krita-3.4.4.0_1
 liburing.so.1 liburing-0.7_1
 libbson-1.0.so.0 libbson-1.17.0_1
+libspatialite.so.7 libspatialite-5.0.0_1
+mod_spatialite.so.7 libspatialite-5.0.0_1
