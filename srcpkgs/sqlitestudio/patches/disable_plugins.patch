@@ -1,0 +1,20 @@
+diff -ru a/Plugins/Plugins.pro b/Plugins/Plugins.pro
+--- a/Plugins/Plugins.pro	2018-07-27 00:02:08.000000000 +0200
++++ b/Plugins/Plugins.pro	2020-11-06 14:41:48.766451862 +0100
+@@ -5,7 +5,6 @@
+ SUBDIRS += \
+     CsvExport \
+     CsvImport \
+-    DbSqlite2 \
+     HtmlExport \
+     PdfExport \
+     SqlExport \
+@@ -18,7 +17,6 @@
+     ConfigMigration \
+     ScriptingTcl \
+     DbAndroid \
+-    DbSqliteCipher \
+     DbSqliteWx \
+     MultiEditorImage
+ 
+Nur in b/Plugins: Plugins.pro~.

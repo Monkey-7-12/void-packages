@@ -1,0 +1,81 @@
+# Template file for 'sqlitestudio'
+# -*- !!! WIP !!! -*-
+pkgname=sqlitestudio
+version=3.2.1
+revision=1
+#archs="i686 x86_64"
+#wrksrc=${pkgname}-${version}/build
+#create_wrksrc=yes
+build_style=qmake
+configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="qt5-qmake qt5-tools-devel"
+makedepends="qt5-script-devel sqlite-devel qt5-svg-devel readline-devel
+ tcl-devel"
+depends=""
+short_desc="A free, open source, multi-platform SQLite database manager"
+maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
+license="GPL-3.0-or-later"
+homepage="https://sqlitestudio.pl/"
+distfiles="https://github.com/pawelsalawa/sqlitestudio/archive/${version}.tar.gz>${pkgname}-${version}.tar.gz"
+checksum=1599046368ab0f11974d9fc7f10cdfc30ca08a7dc6767610b5aa0be26715dc1d
+patch_args="-Np1"
+
+do_configure() {
+	local qmake=/usr/lib/qt5/bin/qmake
+
+	mkdir -p output/{build,build/Plugins}
+
+	cd output/build
+	${qmake} CONFIG+=portable ${qmake_args} \
+		PREFIX=/usr \
+		QT_INSTALL_PREFIX=/usr \
+		LIB=/usr/lib \
+		QMAKE_CC=$CC QMAKE_CXX=$CXX \
+		QMAKE_LINK=$CXX QMAKE_LINK_C=$CC \
+		QMAKE_CFLAGS="${CFLAGS}" \
+		QMAKE_CXXFLAGS="${CXXFLAGS}" \
+		QMAKE_LFLAGS="${LDFLAGS}" \
+		${configure_args} ../../SQLiteStudio3
+
+	cd Plugins
+	${qmake} CONFIG+=portable ${qmake_args} \
+		PREFIX=/usr \
+		QT_INSTALL_PREFIX=/usr \
+		LIB=/usr/lib \
+		QMAKE_CC=$CC QMAKE_CXX=$CXX \
+		QMAKE_LINK=$CXX QMAKE_LINK_C=$CC \
+		QMAKE_CFLAGS="${CFLAGS}" \
+		QMAKE_CXXFLAGS="${CXXFLAGS}" \
+		QMAKE_LFLAGS="${LDFLAGS}" \
+		${configure_args} ../../../Plugins
+}
+
+do_build() {
+        : ${make_cmd:=make}
+	cd output/build
+	${make_cmd} ${makejobs} ${make_build_args} ${make_build_target} \
+		CC="$CC" CXX="$CXX" LINK="$CXX"
+	cd Plugins
+	${make_cmd} ${makejobs} ${make_build_args} ${make_build_target} \
+		CC="$CC" CXX="$CXX" LINK="$CXX"
+}	
+
+do_install() {
+	: ${make_cmd:=make}
+	: ${make_install_target:=install}
+	
+	cd $wrksrc/output/build
+	${make_cmd} INSTALL_ROOT=${DESTDIR} ${make_install_args} ${make_install_target}
+
+	cd $wrksrc/output/build/Plugins
+	${make_cmd} INSTALL_ROOT=${DESTDIR} ${make_install_args} ${make_install_target}
+
+        vinstall $wrksrc/scripts/installer/config/logo.png 644 usr/share/pixmaps ${pkgname}.png
+	vinstall ${FILESDIR}/${pkgname}.desktop 644 usr/share/applications 
+
+	vlicense $wrksrc/LICENSE
+}
