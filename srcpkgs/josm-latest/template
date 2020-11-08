@@ -1,6 +1,6 @@
 # Template file for 'josm-latest'
 pkgname=josm-latest
-version=17293
+version=17301
 revision=1
 depends="virtual?java-runtime"
 short_desc="Java OpenStreetMap Editor"
@@ -8,7 +8,7 @@ maintainer="Bo Son <boson@gmx.at>"
 license="GPL-3.0-or-later"
 homepage="https://josm.openstreetmap.de/"
 distfiles="https://josm.openstreetmap.de/download/josm-snapshot-${version}.jar"
-checksum=d0272dc6adebd529f2553e4c6c4bcb92f853589c9934a98131c8a21d263c39d0
+checksum=b7fb21f7e720ae0ae9e8ef212228bad6bb6dcfd95ff0e3fd035ecda7a36c2396
 
 do_extract() {
         :
