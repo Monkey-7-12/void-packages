@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=SQLiteStudio
-Icon=sqlitestudio
+Icon=SQLiteStudio
 Exec=sqlitestudio
 Terminal=false
 Type=Application

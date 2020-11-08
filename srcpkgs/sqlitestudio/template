@@ -2,7 +2,7 @@
 # -*- !!! WIP !!! -*-
 pkgname=sqlitestudio
 version=3.2.1
-revision=1
+revision=2
 #archs="i686 x86_64"
 #wrksrc=${pkgname}-${version}/build
 #create_wrksrc=yes
@@ -74,7 +74,8 @@ do_install() {
 	cd $wrksrc/output/build/Plugins
 	${make_cmd} INSTALL_ROOT=${DESTDIR} ${make_install_args} ${make_install_target}
 
-        vinstall $wrksrc/scripts/installer/config/logo.png 644 usr/share/pixmaps ${pkgname}.png
+        vinstall $wrksrc/SQLiteStudio3/guiSQLiteStudio/img/sqlitestudio.svg 644 \
+		usr/share/icons/hicolor/scalable/apps SQLiteStudio.svg
 	vinstall ${FILESDIR}/${pkgname}.desktop 644 usr/share/applications 
 
 	vlicense $wrksrc/LICENSE
