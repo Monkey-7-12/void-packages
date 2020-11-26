@@ -1,0 +1,34 @@
+# Template file for 'libkml'
+pkgname=libkml
+version=1.3.0
+revision=1
+#archs="i686 x86_64"
+#wrksrc=
+#create_wrksrc=yes
+build_style=cmake
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends=""
+makedepends="zlib-devel expat-devel boost-devel minizip-devel uriparser-devel"
+depends=""
+short_desc="Driver for reading and writing KML"
+maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/libkml/libkml"
+distfiles="https://github.com/libkml/libkml/archive/${version}.tar.gz"
+checksum=8892439e5570091965aaffe30b08631fdf7ca7f81f6495b4648f0950d7ea7963
+patch_args=-Np1
+
+libkml-devel_package() {
+	depends="$pkgname-${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/include
+		vmove usr/lib/pkgconfig
+		vmove "usr/lib/*.so"
+	}
+}
+

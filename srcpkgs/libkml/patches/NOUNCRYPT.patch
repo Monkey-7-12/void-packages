@@ -1,0 +1,11 @@
+--- a/src/kml/base/contrib/minizip/unzip.c	2015-12-21 18:23:05.000000000 +0100
++++ b/src/kml/base/contrib/minizip/unzip.c	2020-11-26 15:45:55.033835816 +0100
+@@ -42,7 +42,7 @@
+ #include <zlib.h> //RR
+ #include "unzip.h"
+ #include "iomem_simple.h"
+-#undef NOUNCRYPT
++#define NOUNCRYPT
+ 
+ #ifdef STDC
+ #  include <stddef.h>
