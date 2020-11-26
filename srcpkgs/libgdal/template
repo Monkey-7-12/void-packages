@@ -1,17 +1,18 @@
 # Template file for 'libgdal'
 # Modified by Monkey-7-12 <monkeyseven@fblog.ch>
-# + libgdal with additional postgresql support
+# + libgdal with additional postgresql and kml support
 pkgname=libgdal
 version=3.2.0
-revision=1
+revision=2
 wrksrc="gdal-${version}/gdal"
 build_style=gnu-configure
 configure_args="--with-liblzma --with-webp --with-zstd --with-podofo $(vopt_with postgresql pg)"
 hostmakedepends="gettext-devel pkg-config python-numpy json-c-devel"
-makedepends="freexl-devel geos-devel jasper-devel json-c-devel
+makedepends="freexl-devel geos-devel jasper-devel json-c-devel boost-devel
  libcurl-devel libopenexr-devel libopenjpeg2-devel libpodofo-devel libqhull-devel
  libwebp-devel libxml2-devel libzstd-devel netcdf-devel opencl-headers pcre2-devel
- proj-devel sqlite-devel $(vopt_if postgresql postgresql-libs-devel)"
+ proj-devel sqlite-devel $(vopt_if postgresql postgresql-libs-devel)
+ $(vopt_if kml libkml-devel)"
 short_desc="Geospatial Data Abstraction Library"
 #maintainer="Jürgen Buchmüller <pullmoll@t-online.de>"
 maintainer="Monkey-7-12 <monkeyseven@fblog.ch>"
@@ -21,8 +22,8 @@ distfiles="https://github.com/OSGeo/gdal/archive/v${version}.tar.gz"
 checksum=132497c170936a3d5e387797640c371db631d30ba7beabd0b6dacaa3642fb43c
 subpackages="libgdal-devel libgdal-tools"
 
-build_options="postgresql"
-build_options_default="postgresql"
+build_options="postgresql kml"
+build_options_default="postgresql kml"
 
 if [ -z "$CROSS_BUILD" ]; then
 	makedepends+=" hdf5-devel"
