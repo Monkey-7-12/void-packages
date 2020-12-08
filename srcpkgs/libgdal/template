@@ -3,7 +3,7 @@
 # + libgdal with additional postgresql and kml support
 pkgname=libgdal
 version=3.2.0
-revision=2
+revision=3
 wrksrc="gdal-${version}/gdal"
 build_style=gnu-configure
 configure_args="--with-liblzma --with-webp --with-zstd --with-podofo $(vopt_with postgresql pg)"
@@ -11,7 +11,7 @@ hostmakedepends="gettext-devel pkg-config python-numpy json-c-devel"
 makedepends="freexl-devel geos-devel jasper-devel json-c-devel boost-devel
  libcurl-devel libopenexr-devel libopenjpeg2-devel libpodofo-devel libqhull-devel
  libwebp-devel libxml2-devel libzstd-devel netcdf-devel opencl-headers pcre2-devel
- proj-devel sqlite-devel $(vopt_if postgresql postgresql-libs-devel)
+ proj-devel sqlite-devel ocl-icd-devel $(vopt_if postgresql postgresql-libs-devel)
  $(vopt_if kml libkml-devel)"
 short_desc="Geospatial Data Abstraction Library"
 #maintainer="Jürgen Buchmüller <pullmoll@t-online.de>"
